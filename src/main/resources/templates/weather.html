@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html xmlns:th="http://thymeleaf.org">
+    <head>
+        <title>Weather App</title>
+        <style>
+            body {
+                text-align: center;
+                margin-left: 100px;
+                margin-top: 220px;
+            }
+            .container {
+                margin: auto;
+                width: 50%;
+                border: 3px solid green;
+                padding: 10px;
+            }
+
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <h1>Weather App</h1>
+            <form action="" method="post">
+                <label style="position: relative; margin:auto;">City:</label>
+                <input type="text" placeholder="San Francisco" th:field="${location.city}" /><br/><br/>
+                <label style="position: relative; margin:auto">Country Code:</label>
+                <input type="text" placeholder="US" th:field="${location.countryCode}" /><br/><br/><br/>
+                <input type="submit" value="What's the weather like?" />
+            </form>
+        </div>
+        <br/>
+        <div th:if="${weatherResponse != null}">
+            <div th:inline="text">
+                This weather in [[${weatherResponse.name}]], [[${weatherResponse.sys.country}]] is:
+                min temperature is [[${weatherResponse.main.temp_min}]] fahrenheit and max temperature
+                is [[${weatherResponse.main.temp_max}]].
+                
+          
+            </div>
+            
+            <table style="width:100%">
+            <tr>
+            <th>main weather</th>
+            <th>weather description</th>
+            <th>weather icon</th>
+            <th>advice</th>
+            </tr>
+  <tr th:each="mainWeather, stat: ${weatherResponse.weather}">
+    <td th:text="${mainWeather.getMain()}"></td>
+    <td th:text="${mainWeather.getDescription()}"></td>
+    <td th:text="${mainWeather.getIcon()}"></td>
+    <td th:text="${message}">testing</td>
+  </tr>
+</table>
+
+        </div>
+    </body>
+</html>
